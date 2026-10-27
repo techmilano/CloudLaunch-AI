@@ -1,0 +1,217 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Ph from '../components/Ph.astro';
+import { site, isPlaceholder } from '../config/site';
+
+const { founder } = site;
+const initials = isPlaceholder(founder.name)
+  ? '?'
+  : founder.name
+      .split(/\s+/)
+      .map((p) => p[0])
+      .slice(0, 2)
+      .join('')
+      .toUpperCase();
+
+const principles = [
+  {
+    title: 'Outcomes over technology',
+    text: 'We talk about calls returned and requests routed, not model names. The technology should be invisible to your customers and simple for your team.',
+  },
+  {
+    title: 'People stay in the loop',
+    text: 'Automation handles the routine first response. Judgment calls, sensitive conversations, and anything unexpected go to a person on your team.',
+  },
+  {
+    title: 'Honest about limits',
+    text: 'We’ll tell you when a workflow isn’t a good fit, when an integration isn’t confirmed, and when something needs a professional we aren’t — like your attorney or compliance advisor.',
+  },
+  {
+    title: 'Built to be maintained',
+    text: 'A workflow that isn’t looked after drifts out of date. Ongoing monitoring and updates are part of the service, not an afterthought.',
+  },
+];
+---
+<Base
+  title="About"
+  description="CloudLaunchAI helps small and midsize businesses put practical AI workflows to work as a managed service — with human oversight built in."
+>
+  <PageHeader
+    title="Practical AI for businesses that run on relationships"
+    lede="Small and midsize businesses win on responsiveness and trust. Our job is to help you respond reliably — without asking you to become a technology company."
+  />
+
+  <section class="section" aria-labelledby="mission-title">
+    <div class="wrap mission">
+      <h2 id="mission-title">Our mission</h2>
+      <p class="mission__statement">
+        Help small and midsize businesses put practical AI workflows to work, so fewer customers
+        fall through the cracks and teams can spend their time where it matters most.
+      </p>
+      <p>
+        Most owners we talk to aren’t short on effort. They’re short on hours. Calls come in while
+        everyone is busy, messages wait until the end of the day, and follow-up depends on who
+        remembers. CloudLaunchAI exists to close those gaps with workflows that are set up for you,
+        approved by you, and looked after over time.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--white" aria-labelledby="approach-title">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="approach-title">How we approach the work</h2>
+      </div>
+      <ul class="principles" role="list">
+        {principles.map((p) => (
+          <li>
+            <h3>{p.title}</h3>
+            <p>{p.text}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="founder-title">
+    <div class="wrap">
+      <h2 id="founder-title">Who you’ll work with</h2>
+      <div class="founder">
+        <div class="founder__photo">
+          {founder.photo ? (
+            <img src={founder.photo} alt={`Portrait of ${founder.name}`} width="240" height="240" loading="lazy" />
+          ) : (
+            <span class="founder__initials" aria-hidden="true">{initials}</span>
+          )}
+        </div>
+        <div class="founder__text">
+          <h3><Ph value={founder.name} /></h3>
+          <p class="founder__title"><Ph value={founder.title} /></p>
+          <p><Ph value={founder.bio} /></p>
+          <p><strong>Credentials:</strong> <Ph value={founder.credentials} /></p>
+        </div>
+      </div>
+
+      <dl class="facts">
+        <div>
+          <dt>Legal business name</dt>
+          <dd><Ph value={site.legalName} /></dd>
+        </div>
+        <div>
+          <dt>Founded</dt>
+          <dd><Ph value={site.yearFounded} /></dd>
+        </div>
+        <div>
+          <dt>Service area</dt>
+          <dd><Ph value={site.serviceArea} /></dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>
+
+<style>
+  .mission {
+    max-width: 52rem;
+  }
+
+  .mission__statement {
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    font-weight: 500;
+    line-height: 1.4;
+    color: var(--ink);
+    padding-left: 1.25rem;
+    border-left: 3px solid var(--teal-bright);
+    margin-block: 1.5rem 2rem;
+  }
+
+  .principles {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 2rem 3rem;
+  }
+
+  @media (min-width: 44rem) {
+    .principles {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .principles li {
+    margin: 0;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--line-strong);
+  }
+
+  .principles p {
+    margin: 0;
+  }
+
+  .founder {
+    display: grid;
+    gap: 1.5rem 2.5rem;
+    margin-top: 2rem;
+    align-items: start;
+  }
+
+  @media (min-width: 44rem) {
+    .founder {
+      grid-template-columns: 12rem 1fr;
+    }
+  }
+
+  .founder__photo img,
+  .founder__initials {
+    width: 12rem;
+    height: 12rem;
+    border-radius: var(--radius-m);
+    object-fit: cover;
+  }
+
+  .founder__initials {
+    display: grid;
+    place-items: center;
+    background: var(--blue-soft);
+    color: var(--blue);
+    font-family: var(--font-display);
+    font-size: 3rem;
+    font-weight: 600;
+    border: 2px dashed #9db8f5;
+  }
+
+  .founder__title {
+    color: var(--muted);
+    margin-top: -0.25rem;
+  }
+
+  .facts {
+    display: grid;
+    gap: 1rem 2rem;
+    margin: 3rem 0 0;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line);
+  }
+
+  @media (min-width: 44rem) {
+    .facts {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .facts dt {
+    font-size: var(--step--1);
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  .facts dd {
+    margin: 0.25rem 0 0;
+  }
+</style>

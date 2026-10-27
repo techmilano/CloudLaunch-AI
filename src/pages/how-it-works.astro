@@ -1,0 +1,250 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { steps } from '../data/content';
+
+const faqs = [
+  {
+    q: 'Is this meant to replace my front-desk staff?',
+    a: 'No. The goal is to make sure routine first responses happen reliably so your team can focus on the conversations that need a person. Your staff stay in the loop and handle anything outside what you’ve approved.',
+  },
+  {
+    q: 'What happens when a customer asks something it can’t answer?',
+    a: 'It hands off. Every workflow has escalation rules you approve — for example, sending the request to a specific person, flagging it as urgent, or telling the customer someone will follow up.',
+  },
+  {
+    q: 'Which phone systems and tools do you work with?',
+    a: 'It depends on what you use today. We review your current setup during discovery and confirm what we can connect to before recommending a solution. We won’t promise an integration we haven’t checked.',
+  },
+  {
+    q: 'How long does setup take?',
+    a: 'It varies with scope — a single missed-call follow-up is simpler than a multi-location front desk. We’ll give you an estimate after discovery, once we understand what’s involved.',
+  },
+  {
+    q: 'What does it cost?',
+    a: 'Pricing depends on the workflows you need and the level of ongoing management. We’ll walk through options on the discovery call.',
+  },
+  {
+    q: 'Can we pause or change the workflow later?',
+    a: 'Yes. Your business changes and the workflow should too. Updates to answers, hours, or routing are part of ongoing management, and every launch includes a way to pause if needed.',
+  },
+];
+---
+<Base
+  title="How it works"
+  description="How CloudLaunchAI's managed service works: we discover your workflow, design an approved solution, launch it with testing and human escalation, then monitor and improve it over time."
+>
+  <PageHeader
+    title="A managed service, from first call to ongoing care"
+    lede="You don’t need an IT department or a weekend learning new software. We do the setup and the upkeep. Your team approves what matters and stays in control of the customer experience."
+  />
+
+  <section class="section" aria-labelledby="steps-title">
+    <div class="wrap">
+      <h2 id="steps-title" class="visually-hidden">The four steps</h2>
+      <ol class="steps" role="list">
+        {steps.map((step, i) => (
+          <li class="step">
+            <span class="step__num" aria-hidden="true">{i + 1}</span>
+            <div class="step__main">
+              <h3><span class="visually-hidden">Step {i + 1}: </span>{step.name}</h3>
+              <p class="step__detail">{step.detail}</p>
+              <dl class="step__facts">
+                <div>
+                  <dt>What we need from you</dt>
+                  <dd>{step.fromYou}</dd>
+                </div>
+                <div>
+                  <dt>What you get</dt>
+                  <dd>{step.outcome}</dd>
+                </div>
+              </dl>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section section--white" aria-labelledby="faq-title">
+    <div class="wrap faq">
+      <h2 id="faq-title">Common questions</h2>
+      <div class="faq__list">
+        {faqs.map((f) => (
+          <details>
+            <summary>{f.q}</summary>
+            <p>{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CtaBand title="Start with a conversation" />
+</Base>
+
+<style>
+  .steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .step {
+    position: relative;
+    display: grid;
+    grid-template-columns: 3rem 1fr;
+    gap: 1.25rem;
+    padding-bottom: clamp(2.5rem, 2rem + 2vw, 4rem);
+    margin: 0;
+  }
+
+  .step:last-child {
+    padding-bottom: 0;
+  }
+
+  .step:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    left: calc(1.5rem - 1px);
+    top: 3rem;
+    bottom: 0;
+    border-left: 2px dashed var(--teal-bright);
+  }
+
+  @media (min-width: 48rem) {
+    .step {
+      grid-template-columns: 4rem 1fr;
+      gap: 2rem;
+    }
+
+    .step:not(:last-child)::before {
+      left: calc(2rem - 1px);
+      top: 4rem;
+    }
+  }
+
+  .step__num {
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    border: 2px solid var(--blue);
+    background: var(--paper);
+    color: var(--blue);
+    font-family: var(--font-display);
+    font-weight: 650;
+    font-size: 1.25rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  @media (min-width: 48rem) {
+    .step__num {
+      width: 4rem;
+      height: 4rem;
+      font-size: 1.5rem;
+    }
+  }
+
+  .step__main h3 {
+    font-size: var(--step-3);
+    margin-top: 0.3rem;
+  }
+
+  @media (min-width: 48rem) {
+    .step__main h3 {
+      margin-top: 0.6rem;
+    }
+  }
+
+  .step__detail {
+    font-size: var(--step-1);
+    line-height: 1.55;
+  }
+
+  .step__facts {
+    display: grid;
+    gap: 1rem;
+    margin: 1.5rem 0 0;
+    max-width: 52rem;
+  }
+
+  @media (min-width: 44rem) {
+    .step__facts {
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+  }
+
+  .step__facts div {
+    padding-top: 0.85rem;
+    border-top: 1px solid var(--line-strong);
+  }
+
+  .step__facts dt {
+    font-weight: 700;
+    color: var(--ink);
+    font-size: var(--step--1);
+    margin-bottom: 0.25rem;
+  }
+
+  .step__facts dd {
+    margin: 0;
+  }
+
+  /* FAQ */
+  .faq {
+    max-width: 52rem;
+  }
+
+  .faq__list {
+    margin-top: 2rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .faq details {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .faq summary {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.15rem 0;
+    cursor: pointer;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--step-1);
+    color: var(--ink);
+    list-style: none;
+  }
+
+  .faq summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq summary::after {
+    content: '+';
+    flex-shrink: 0;
+    width: 1.75rem;
+    height: 1.75rem;
+    display: grid;
+    place-items: center;
+    border: 1.5px solid var(--line-strong);
+    border-radius: 50%;
+    font-size: 1.1rem;
+    line-height: 1;
+    color: var(--blue);
+  }
+
+  .faq details[open] summary::after {
+    content: '–';
+  }
+
+  .faq details p {
+    margin: 0 0 1.25rem;
+  }
+</style>

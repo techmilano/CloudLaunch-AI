@@ -1,0 +1,503 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Icon from '../components/Icon.astro';
+import Ph from '../components/Ph.astro';
+import { site, isPlaceholder } from '../config/site';
+
+const schedulingSet = !isPlaceholder(site.schedulingUrl);
+const emailSet = !isPlaceholder(site.contactEmail);
+
+// Options for the "Business type" field. Edit freely — Netlify stores whatever is selected.
+const businessTypes = [
+  'Home services (plumbing, HVAC, electrical, cleaning, etc.)',
+  'Healthcare or wellness practice',
+  'Legal, accounting, or professional services',
+  'Property management or real estate',
+  'Automotive',
+  'Salon, spa, or personal services',
+  'Retail or hospitality',
+  'Other',
+];
+---
+<Base
+  title="Contact"
+  description="Book a discovery call or send CloudLaunchAI a short message about how calls and inquiries reach your business today."
+>
+  <PageHeader
+    title="Let’s talk about your inquiries"
+    lede="Tell us a little about your business and where calls or messages slip through. We’ll reply to set up a discovery call."
+  />
+
+  <section class="section contact" aria-label="Contact options">
+    <div class="wrap contact__grid">
+      <!-- Inquiry form ---------------------------------------------------- -->
+      <div class="contact__form-col">
+        <h2 id="form-title">Send an inquiry</h2>
+
+        <form
+          name="contact"
+          method="POST"
+          action="/thanks/"
+          data-netlify="true"
+          netlify-honeypot="bot-field"
+          class="form"
+          aria-labelledby="form-title"
+          data-contact-form
+        >
+          <input type="hidden" name="form-name" value="contact" />
+          <input type="hidden" name="subject" value="New website inquiry (%{submissionId})" />
+
+          <p class="form__honeypot" aria-hidden="true">
+            <label>Leave this field empty <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+          </p>
+
+          <div class="form__summary" role="alert" tabindex="-1" hidden data-error-summary>
+            <h3>Please fix the following:</h3>
+            <ul data-error-list></ul>
+          </div>
+
+          <p class="form__required-note">All fields are required.</p>
+
+          <div class="field">
+            <label for="name">Your name</label>
+            <input id="name" name="name" type="text" autocomplete="name" required maxlength="100" aria-describedby="name-error" />
+            <p class="field__error" id="name-error" data-error-for="name"></p>
+          </div>
+
+          <div class="field">
+            <label for="email">Business email</label>
+            <input id="email" name="email" type="email" autocomplete="email" inputmode="email" required maxlength="150" aria-describedby="email-error" />
+            <p class="field__error" id="email-error" data-error-for="email"></p>
+          </div>
+
+          <div class="field">
+            <label for="company">Company</label>
+            <input id="company" name="company" type="text" autocomplete="organization" required maxlength="150" aria-describedby="company-error" />
+            <p class="field__error" id="company-error" data-error-for="company"></p>
+          </div>
+
+          <div class="field">
+            <label for="business-type">Business type</label>
+            <select id="business-type" name="business-type" required aria-describedby="business-type-error">
+              <option value="">Choose one</option>
+              {businessTypes.map((t) => <option value={t}>{t}</option>)}
+            </select>
+            <p class="field__error" id="business-type-error" data-error-for="business-type"></p>
+          </div>
+
+          <div class="field">
+            <label for="message">What would you like help with?</label>
+            <p class="field__hint" id="message-hint">For example: “We miss calls when we’re on jobs and don’t always get back to people the same day.”</p>
+            <textarea id="message" name="message" rows="6" required minlength="10" maxlength="3000" aria-describedby="message-hint message-error"></textarea>
+            <p class="field__error" id="message-error" data-error-for="message"></p>
+          </div>
+
+          <div class="form__privacy">
+            <p>
+              <strong>Privacy notice:</strong> We use the details you send to reply to your inquiry.
+              Submissions are stored by our form provider, Netlify, and are not published on this
+              website. Please don’t include health, payment, or other sensitive personal information.
+              See our <a href="/privacy/">privacy notice (draft)</a>.
+            </p>
+          </div>
+
+          <div class="form__actions">
+            <button class="btn btn--primary" type="submit" data-submit>Send inquiry</button>
+          </div>
+
+          <p class="form__failure" role="alert" hidden data-failure>
+            Your message didn’t send. Check your connection and try again{emailSet ? <>, or email <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a></> : null}.
+          </p>
+        </form>
+
+        <div class="form-success" hidden data-success>
+          <span class="form-success__icon"><Icon name="check" size={28} /></span>
+          <h3 tabindex="-1" data-success-heading>Inquiry sent. Thank you.</h3>
+          <p>We’ve received your message and will reply to the email address you provided to set up a time to talk.</p>
+          <p><a href="/">Back to the home page</a></p>
+        </div>
+      </div>
+
+      <!-- Scheduling + direct contact ------------------------------------- -->
+      <aside class="contact__aside" aria-labelledby="schedule-title">
+        <div id="schedule" class="schedule">
+          <span class="schedule__icon"><Icon name="calendar" size={24} /></span>
+          <h2 id="schedule-title">{site.cta.primary}</h2>
+          <p>Prefer to pick a time? Book a short discovery call about how inquiries reach your business today.</p>
+          {schedulingSet ? (
+            <a class="btn btn--primary" href={site.schedulingUrl} target="_blank" rel="noopener">
+              Choose a time<span class="visually-hidden"> (opens in a new tab)</span>
+            </a>
+          ) : (
+            <div class="placeholder-panel">
+              <p><strong>Scheduling link placeholder:</strong> <span class="placeholder">{site.schedulingUrl}</span></p>
+              <p>Add your booking page URL as <code>schedulingUrl</code> in <code>src/config/site.ts</code>. Until then, please use the inquiry form.</p>
+            </div>
+          )}
+        </div>
+
+        <div class="direct">
+          <h2>Email</h2>
+          <p class="direct__line">
+            <Icon name="mail" size={20} />
+            {emailSet ? <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a> : <Ph value={site.contactEmail} />}
+          </p>
+          <h2>Service area</h2>
+          <p><Ph value={site.serviceArea} /></p>
+        </div>
+      </aside>
+    </div>
+  </section>
+</Base>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('[data-contact-form]');
+
+  if (form) {
+    // Native validation still works without JavaScript; with it we show clearer messages.
+    form.noValidate = true;
+
+    const summary = form.querySelector<HTMLElement>('[data-error-summary]')!;
+    const summaryList = form.querySelector<HTMLElement>('[data-error-list]')!;
+    const failure = form.querySelector<HTMLElement>('[data-failure]')!;
+    const submit = form.querySelector<HTMLButtonElement>('[data-submit]')!;
+    const success = document.querySelector<HTMLElement>('[data-success]')!;
+    const successHeading = document.querySelector<HTMLElement>('[data-success-heading]')!;
+
+    type Field = HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
+    const fields = Array.from(form.querySelectorAll<Field>('input[required], select[required], textarea[required]'));
+
+    const missing: Record<string, string> = {
+      name: 'Enter your name.',
+      email: 'Enter your business email.',
+      company: 'Enter your company name.',
+      'business-type': 'Choose your business type.',
+      message: 'Enter a short message about what you’d like help with.',
+    };
+
+    const messageFor = (field: Field): string => {
+      const v = field.validity;
+      if (v.valueMissing) return missing[field.name] ?? 'Fill in this field.';
+      if (v.typeMismatch) return 'Enter an email address in the format name@company.com.';
+      if (v.tooShort) return `Add a little more detail (at least ${(field as HTMLTextAreaElement).minLength} characters).`;
+      if (v.tooLong) return `Shorten this to ${(field as HTMLInputElement).maxLength} characters or fewer.`;
+      return '';
+    };
+
+    const showError = (field: Field, message: string) => {
+      const el = form.querySelector<HTMLElement>(`[data-error-for="${field.name}"]`);
+      if (el) el.textContent = message;
+      if (message) field.setAttribute('aria-invalid', 'true');
+      else field.removeAttribute('aria-invalid');
+    };
+
+    const validate = (field: Field) => {
+      // Trim whitespace-only answers so they count as empty.
+      if (!(field instanceof HTMLSelectElement) && field.value.trim() === '') field.value = '';
+      const message = messageFor(field);
+      showError(field, message);
+      return message;
+    };
+
+    fields.forEach((field) => {
+      field.addEventListener('blur', () => {
+        if (field.dataset.touched || field.value) {
+          field.dataset.touched = 'true';
+          validate(field);
+        }
+      });
+      field.addEventListener('input', () => {
+        if (field.getAttribute('aria-invalid') === 'true') validate(field);
+      });
+    });
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      failure.hidden = true;
+
+      const errors = fields
+        .map((field) => ({ field, message: validate(field) }))
+        .filter((e) => e.message);
+
+      if (errors.length) {
+        summaryList.innerHTML = '';
+        errors.forEach(({ field, message }) => {
+          const li = document.createElement('li');
+          const a = document.createElement('a');
+          a.href = `#${field.id}`;
+          a.textContent = message;
+          a.addEventListener('click', (e) => {
+            e.preventDefault();
+            field.focus();
+          });
+          li.appendChild(a);
+          summaryList.appendChild(li);
+        });
+        summary.hidden = false;
+        summary.focus();
+        return;
+      }
+
+      summary.hidden = true;
+      submit.disabled = true;
+      submit.textContent = 'Sending…';
+
+      try {
+        const body = new URLSearchParams(new FormData(form) as unknown as Record<string, string>).toString();
+        const response = await fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body,
+        });
+        if (!response.ok) throw new Error(`Status ${response.status}`);
+
+        form.hidden = true;
+        success.hidden = false;
+        successHeading.focus();
+      } catch {
+        failure.hidden = false;
+        submit.disabled = false;
+        submit.textContent = 'Send inquiry';
+      }
+    });
+  }
+</script>
+
+<style>
+  .contact__grid {
+    display: grid;
+    gap: 3.5rem;
+  }
+
+  @media (min-width: 60rem) {
+    .contact__grid {
+      grid-template-columns: 1.4fr 1fr;
+      gap: 5rem;
+    }
+  }
+
+  .contact h2 {
+    font-size: var(--step-2);
+  }
+
+  /* Form */
+  .form {
+    max-width: 40rem;
+  }
+
+  .form__required-note {
+    font-size: var(--step--1);
+    color: var(--muted);
+  }
+
+  .form__honeypot {
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  .field {
+    margin-bottom: 1.35rem;
+  }
+
+  .field label {
+    display: block;
+    font-weight: 650;
+    color: var(--ink);
+    margin-bottom: 0.4rem;
+  }
+
+  .field__hint {
+    font-size: var(--step--1);
+    color: var(--muted);
+    margin: -0.15rem 0 0.5rem;
+  }
+
+  .field input,
+  .field select,
+  .field textarea {
+    width: 100%;
+    min-height: 48px;
+    padding: 0.7rem 0.85rem;
+    font: inherit;
+    font-size: 1rem; /* 16px+ prevents iOS zoom on focus */
+    color: var(--ink);
+    background: var(--surface);
+    border: 1.5px solid var(--line-strong);
+    border-radius: var(--radius-s);
+    transition: border-color 0.15s ease;
+  }
+
+  .field select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5 6 6.5l5-5' fill='none' stroke='%230e1a3a' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.9rem center;
+    padding-right: 2.5rem;
+  }
+
+  .field textarea {
+    resize: vertical;
+    line-height: 1.5;
+  }
+
+  .field input:hover,
+  .field select:hover,
+  .field textarea:hover {
+    border-color: #8d9bb3;
+  }
+
+  .field input:focus-visible,
+  .field select:focus-visible,
+  .field textarea:focus-visible {
+    border-color: var(--blue);
+    outline: 3px solid var(--focus);
+    outline-offset: 1px;
+  }
+
+  .field [aria-invalid='true'] {
+    border-color: var(--danger);
+    border-width: 2px;
+  }
+
+  .field__error {
+    margin: 0.35rem 0 0;
+    font-size: var(--step--1);
+    font-weight: 600;
+    color: var(--danger);
+  }
+
+  .field__error:empty {
+    display: none;
+  }
+
+  .form__summary {
+    border: 2px solid var(--danger);
+    border-radius: var(--radius-s);
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.5rem;
+    background: #fff5f4;
+  }
+
+  .form__summary h3 {
+    font-size: 1.0625rem;
+    color: var(--danger);
+    margin-bottom: 0.5rem;
+  }
+
+  .form__summary ul {
+    margin: 0;
+  }
+
+  .form__summary :global(li) {
+    color: var(--danger);
+  }
+
+  .form__summary :global(a) {
+    color: var(--danger);
+    font-weight: 600;
+  }
+
+  .form__privacy {
+    font-size: var(--step--1);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-s);
+    padding: 1rem 1.15rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .form__privacy p {
+    margin: 0;
+  }
+
+  .form__actions .btn[disabled] {
+    opacity: 0.7;
+    cursor: progress;
+  }
+
+  .form__failure {
+    margin-top: 1rem;
+    padding: 0.85rem 1rem;
+    border-left: 3px solid var(--danger);
+    background: #fff5f4;
+    color: var(--danger);
+    font-weight: 600;
+  }
+
+  .form-success {
+    max-width: 40rem;
+    padding: 2rem;
+    background: #eaf7f2;
+    border: 1.5px solid #a6dcc6;
+    border-radius: var(--radius-m);
+  }
+
+  .form-success__icon {
+    display: inline-grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    background: var(--success);
+    color: #fff;
+    margin-bottom: 1rem;
+  }
+
+  .form-success h3 {
+    font-size: var(--step-2);
+  }
+
+  .form-success p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Aside */
+  .contact__aside {
+    display: grid;
+    gap: 2.5rem;
+    align-content: start;
+  }
+
+  .schedule {
+    padding: 1.75rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-m);
+  }
+
+  .schedule__icon {
+    display: inline-grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: var(--radius-s);
+    background: var(--blue-soft);
+    color: var(--blue);
+    margin-bottom: 1rem;
+  }
+
+  .schedule code {
+    font-size: 0.875em;
+    overflow-wrap: anywhere;
+  }
+
+  .direct h2 {
+    font-size: var(--step-1);
+    margin-bottom: 0.35rem;
+  }
+
+  .direct p {
+    margin-bottom: 1.5rem;
+  }
+
+  .direct__line {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--teal);
+  }
+</style>

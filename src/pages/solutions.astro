@@ -1,0 +1,200 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Icon from '../components/Icon.astro';
+import { solutions } from '../data/content';
+---
+<Base
+  title="Solutions"
+  description="AI Front Desk, Missed-Call Recovery, and industry-specific workflows from CloudLaunchAI — designed around your business, approved by your team, and managed for you."
+>
+  <PageHeader
+    title="Solutions built around how your business works"
+    lede="Each solution is a managed workflow, set up for your business and approved by your team. Below are the kinds of situations they’re typically designed for. During discovery, we confirm what fits your phone system, website, and tools before recommending anything."
+  >
+    <nav class="jump" aria-label="On this page">
+      <ul role="list">
+        {solutions.map((s) => <li><a href={`#${s.id}`}>{s.name}</a></li>)}
+      </ul>
+    </nav>
+  </PageHeader>
+
+  {solutions.map((s, i) => (
+    <section id={s.id} class:list={['section', 'solution', { 'section--white': i % 2 === 0 }]} aria-labelledby={`${s.id}-title`}>
+      <div class="wrap solution__grid">
+        <div class="solution__intro">
+          <span class="solution__icon"><Icon name={s.icon} size={28} /></span>
+          <h2 id={`${s.id}-title`}>{s.name}</h2>
+          <p class="lede">{s.summary}</p>
+        </div>
+        <div class="solution__detail">
+          <h3>Typical uses</h3>
+          <ul class="checks" role="list">
+            {s.useCases.map((u) => (
+              <li><Icon name="check" size={20} class="checks__mark" />{u}</li>
+            ))}
+          </ul>
+          <div class="control">
+            <h3>What you control</h3>
+            <p>{s.youControl}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <section class="section" aria-labelledby="fit-title">
+    <div class="wrap fit">
+      <h2 id="fit-title">What to expect from any solution</h2>
+      <div class="fit__cols">
+        <p>
+          <strong>Scoped to your setup.</strong> Which tools we can connect to — your phone system,
+          calendar, CRM, or inbox — depends on what you use today. We check before we commit, and
+          we don’t promise an integration we haven’t confirmed.
+        </p>
+        <p>
+          <strong>No one-size-fits-all pricing.</strong> Cost depends on the workflows you need and
+          how much ongoing management they involve. We’ll walk through options after we understand
+          your situation.
+        </p>
+        <p>
+          <strong>Your compliance needs come first.</strong> If your industry has specific privacy or
+          record-keeping rules, tell us early. We design within them and will say so if a workflow
+          isn’t appropriate.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand title="Not sure which one fits?" text="Tell us where inquiries slip through today. We’ll suggest where to start — or tell you if now isn’t the right time." />
+</Base>
+
+<style>
+  .jump ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    list-style: none;
+    margin: 2rem 0 0;
+    padding: 0;
+  }
+
+  .jump li {
+    margin: 0;
+  }
+
+  .jump a {
+    display: inline-block;
+    padding: 0.55rem 1rem;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    color: var(--ink);
+    font-weight: 600;
+    font-size: 0.9375rem;
+    text-decoration: none;
+    background: var(--surface);
+  }
+
+  .jump a:hover {
+    border-color: var(--blue);
+    color: var(--blue);
+  }
+
+  .solution__grid {
+    display: grid;
+    gap: 2.5rem;
+  }
+
+  @media (min-width: 56rem) {
+    .solution__grid {
+      grid-template-columns: 1fr 1.15fr;
+      gap: 4rem;
+    }
+
+    .solution__intro {
+      position: sticky;
+      top: 7rem;
+      align-self: start;
+    }
+  }
+
+  .solution__icon {
+    display: inline-grid;
+    place-items: center;
+    width: 3.25rem;
+    height: 3.25rem;
+    border-radius: var(--radius-s);
+    background: var(--blue-soft);
+    color: var(--blue);
+    margin-bottom: 1.25rem;
+  }
+
+  .solution__detail h3 {
+    font-size: var(--step-1);
+  }
+
+  .checks {
+    list-style: none;
+    margin: 0 0 2rem;
+    padding: 0;
+  }
+
+  .checks li {
+    display: grid;
+    grid-template-columns: 1.75rem 1fr;
+    gap: 0.5rem;
+    padding-block: 0.85rem;
+    border-bottom: 1px solid var(--line);
+    margin: 0;
+  }
+
+  .checks li:first-child {
+    border-top: 1px solid var(--line);
+  }
+
+  :global(.checks__mark) {
+    color: var(--teal);
+    margin-top: 0.15rem;
+  }
+
+  .control {
+    padding: 1.25rem 1.5rem;
+    border-left: 3px solid var(--blue);
+    background: var(--blue-soft);
+    border-radius: 0 var(--radius-s) var(--radius-s) 0;
+  }
+
+  .control h3 {
+    margin-bottom: 0.35rem;
+  }
+
+  .control p {
+    margin: 0;
+    color: var(--ink);
+  }
+
+  .fit__cols {
+    display: grid;
+    gap: 1.5rem 3rem;
+    margin-top: 1.5rem;
+  }
+
+  @media (min-width: 52rem) {
+    .fit__cols {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .fit__cols p {
+    margin: 0;
+  }
+
+  .fit__cols strong {
+    display: block;
+    margin-bottom: 0.35rem;
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    font-weight: 600;
+  }
+</style>

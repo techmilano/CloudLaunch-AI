@@ -1,0 +1,21 @@
+# build output
+dist/
+.astro/
+
+# dependencies
+node_modules/
+
+# Netlify CLI link state (never commit)
+.netlify/
+
+# logs
+npm-debug.log*
+
+# environment
+.env
+.env.*
+
+# OS / editor
+.DS_Store
+.vscode/*
+!.vscode/extensions.json

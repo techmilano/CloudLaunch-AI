@@ -1,0 +1,18 @@
+---
+import { site, bookingHref, bookingIsExternal } from '../config/site';
+
+interface Props {
+  variant?: 'primary' | 'on-dark';
+  class?: string;
+}
+const { variant = 'primary', class: className = '' } = Astro.props;
+const external = bookingIsExternal();
+---
+<a
+  class:list={['btn', `btn--${variant}`, className]}
+  href={bookingHref()}
+  {...(external ? { target: '_blank', rel: 'noopener' } : {})}
+>
+  {site.cta.primary}
+  {external && <span class="visually-hidden">(opens in a new tab)</span>}
+</a>

@@ -1,0 +1,26 @@
+---
+/**
+ * Fallback success page for the contact form when JavaScript is off.
+ * (With JavaScript, the success message appears inline on /contact/.)
+ */
+import Base from '../layouts/Base.astro';
+---
+<Base title="Inquiry sent" description="Your inquiry has been sent to CloudLaunchAI." noindex>
+  <section class="section">
+    <div class="wrap thanks">
+      <h1>Inquiry sent. Thank you.</h1>
+      <p class="lede">We’ve received your message and will reply to the email address you provided to set up a time to talk.</p>
+      <div class="btn-row">
+        <a class="btn btn--primary" href="/">Back to the home page</a>
+        <a class="btn btn--secondary" href="/solutions/">Explore solutions</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .thanks {
+    max-width: 44rem;
+    min-height: 40vh;
+  }
+</style>

@@ -1,0 +1,22 @@
+{
+  "name": "cloudlaunchai-website",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Marketing website for CloudLaunchAI — static Astro site deployed on Netlify.",
+  "engines": {
+    "node": ">=22.23.4"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check:placeholders": "node scripts/list-placeholders.mjs"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "3.7.4",
+    "@fontsource-variable/outfit": "5.3.0",
+    "@fontsource-variable/public-sans": "5.3.0",
+    "astro": "7.4.2"
+  }
+}

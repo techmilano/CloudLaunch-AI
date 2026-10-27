@@ -1,0 +1,119 @@
+---
+import { site, isPlaceholder } from '../config/site';
+import Ph from './Ph.astro';
+
+const year = new Date().getFullYear();
+const emailIsSet = !isPlaceholder(site.contactEmail);
+---
+<footer class="site-footer">
+  <div class="wrap site-footer__grid">
+    <div class="site-footer__brand">
+      <img src="/logo.png" alt={site.name} width="152" height="40" loading="lazy" />
+      <p>
+        Managed AI workflows for small and midsize businesses. Serving <Ph value={site.serviceArea} />.
+      </p>
+    </div>
+
+    <nav aria-label="Footer">
+      <h2 class="site-footer__heading">Pages</h2>
+      <ul role="list">
+        <li><a href="/">Home</a></li>
+        {site.nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+      </ul>
+    </nav>
+
+    <div>
+      <h2 class="site-footer__heading">Get in touch</h2>
+      <ul role="list">
+        <li>
+          {emailIsSet ? <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a> : <Ph value={site.contactEmail} />}
+        </li>
+        <li><a href="/contact/">Send an inquiry</a></li>
+        {site.social.map((s) => <li><a href={s.href} rel="me noopener">{s.label}</a></li>)}
+      </ul>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="site-footer__legal">
+      <p>&copy; {year} <Ph value={site.legalName} />. All rights reserved.</p>
+      <p><a href="/privacy/">Privacy notice (draft)</a></p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--surface);
+    border-top: 1px solid var(--line);
+    padding-top: clamp(3rem, 2rem + 3vw, 4.5rem);
+    font-size: var(--step--1);
+  }
+
+  .site-footer__grid {
+    display: grid;
+    gap: 2.5rem;
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 44rem) {
+    .site-footer__grid {
+      grid-template-columns: 2fr 1fr 1fr;
+    }
+  }
+
+  .site-footer__brand img {
+    height: 40px;
+    width: auto;
+    margin-bottom: 1rem;
+  }
+
+  .site-footer__brand p {
+    max-width: 30rem;
+    color: var(--muted);
+  }
+
+  .site-footer__heading {
+    font-family: var(--font-body);
+    font-size: var(--step--1);
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: 0;
+    margin-bottom: 0.75rem;
+  }
+
+  .site-footer ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .site-footer li + li {
+    margin-top: 0.5rem;
+  }
+
+  .site-footer a {
+    color: var(--ink-soft);
+    display: inline-block;
+    padding-block: 0.15rem;
+  }
+
+  .site-footer a:hover {
+    color: var(--blue);
+  }
+
+  .site-footer__legal {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.5rem 2rem;
+    margin-top: 3rem;
+    padding-block: 1.5rem;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+  }
+
+  .site-footer__legal p {
+    margin: 0;
+  }
+</style>

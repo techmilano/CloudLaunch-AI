@@ -1,0 +1,343 @@
+---
+import Base from '../layouts/Base.astro';
+import BookingButton from '../components/BookingButton.astro';
+import InquiryPath from '../components/InquiryPath.astro';
+import ProcessLine from '../components/ProcessLine.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Icon from '../components/Icon.astro';
+import Ph from '../components/Ph.astro';
+import { site } from '../config/site';
+import { solutions, oversight } from '../data/content';
+---
+<Base
+  title="Managed AI workflows that follow up on every inquiry"
+  description="Missed calls and slow replies cost small businesses customers. CloudLaunchAI sets up and manages AI workflows that answer approved questions, follow up on missed calls, and route requests to your team."
+>
+  <!-- Hero -------------------------------------------------------------- -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="wrap hero__grid">
+      <div class="hero__copy">
+        <h1 id="hero-title">Missed calls shouldn’t mean missed customers.</h1>
+        <p class="lede">
+          CloudLaunchAI sets up and manages practical AI workflows that answer common questions,
+          capture lead details, and follow up when your team can’t pick up — so more inquiries reach
+          the right person.
+        </p>
+        <p class="hero__model">
+          We handle the setup, monitoring, and ongoing improvements. You decide what gets said and
+          when a person steps in.
+        </p>
+        <div class="btn-row">
+          <BookingButton />
+          <a class="btn btn--secondary" href="/solutions/">{site.cta.secondary}</a>
+        </div>
+        <p class="hero__meta">A managed service for small and midsize businesses in <Ph value={site.serviceArea} />.</p>
+      </div>
+      <div class="hero__visual">
+        <InquiryPath />
+      </div>
+    </div>
+  </section>
+
+  <!-- Problem ----------------------------------------------------------- -->
+  <section class="section section--white" aria-labelledby="problem-title">
+    <div class="wrap problem">
+      <div class="section-head">
+        <h2 id="problem-title">Busy teams can’t answer everything. Customers don’t always wait.</h2>
+      </div>
+      <ul class="problem__list" role="list">
+        <li>
+          <h3>Calls arrive at the worst moments</h3>
+          <p>You’re with a customer, out on a job, or closed for the night. The phone rings anyway — and a caller who reaches voicemail often tries someone else.</p>
+        </li>
+        <li>
+          <h3>Messages wait for a free minute</h3>
+          <p>Website forms and messages sit in an inbox until someone has time. By then, the person may have already booked elsewhere.</p>
+        </li>
+        <li>
+          <h3>Follow-up depends on memory</h3>
+          <p>Details get passed along on sticky notes and in hallway conversations. Some requests reach the wrong person; some don’t reach anyone.</p>
+        </li>
+      </ul>
+      <p class="problem__close">
+        None of this is a people problem. It’s a gap in the workflow — and gaps can be designed around.
+      </p>
+    </div>
+  </section>
+
+  <!-- How it works ------------------------------------------------------ -->
+  <section class="section" aria-labelledby="how-title">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="how-title">We build it, run it, and keep it working</h2>
+        <p class="lede">
+          CloudLaunchAI is a managed service, not software you have to figure out. We design the
+          workflow with you, launch it carefully, and stay on to monitor and improve it.
+        </p>
+      </div>
+      <ProcessLine />
+      <p class="more-link"><a href="/how-it-works/">See how the process works in detail</a></p>
+    </div>
+  </section>
+
+  <!-- Solutions --------------------------------------------------------- -->
+  <section class="section section--white" aria-labelledby="solutions-title">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="solutions-title">Where we can help first</h2>
+        <p class="lede">Start with the gap that costs you the most. Each workflow is shaped around your business and approved by your team.</p>
+      </div>
+      <ul class="solution-rows" role="list">
+        {solutions.map((s) => (
+          <li class="solution-row">
+            <span class="solution-row__icon"><Icon name={s.icon} size={26} /></span>
+            <h3>{s.name}</h3>
+            <div>
+              <p>{s.summary}</p>
+              <a href={`/solutions/#${s.id}`}>Typical uses for {s.name}</a>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Human oversight --------------------------------------------------- -->
+  <section class="oversight" aria-labelledby="oversight-title">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="oversight-title">Your business stays in charge</h2>
+        <p class="lede">
+          AI handles the routine first response. Your people handle the judgment calls. Every
+          workflow we build is designed with human oversight from the start.
+        </p>
+      </div>
+      <ul class="oversight__grid" role="list">
+        {oversight.map((o) => (
+          <li>
+            <span class="oversight__icon"><Icon name={o.icon} size={22} /></span>
+            <h3>{o.title}</h3>
+            <p>{o.text}</p>
+          </li>
+        ))}
+      </ul>
+      <p class="oversight__note">
+        We plan around the privacy and compliance requirements that apply to your business and ask
+        about them early. We’ll tell you plainly what a workflow can and can’t support.
+      </p>
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>
+
+<style>
+  /* Hero */
+  .hero {
+    padding-block: clamp(2.5rem, 1.5rem + 5vw, 6rem) clamp(3.5rem, 2.5rem + 4vw, 6rem);
+  }
+
+  .hero__grid {
+    display: grid;
+    gap: clamp(2.5rem, 2rem + 3vw, 4.5rem);
+    align-items: center;
+  }
+
+  @media (min-width: 60rem) {
+    .hero__grid {
+      grid-template-columns: 1.15fr 0.85fr;
+    }
+  }
+
+  .hero h1 {
+    max-width: 14ch;
+  }
+
+  .hero .lede {
+    max-width: 36rem;
+  }
+
+  .hero__model {
+    max-width: 36rem;
+    padding-left: 1rem;
+    border-left: 3px solid var(--teal-bright);
+    color: var(--ink);
+    font-weight: 500;
+    margin-bottom: 2rem;
+  }
+
+  .hero__meta {
+    margin: 1.5rem 0 0;
+    font-size: var(--step--1);
+    color: var(--muted);
+  }
+
+  /* Problem */
+  .problem__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 2rem;
+  }
+
+  @media (min-width: 50rem) {
+    .problem__list {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2.5rem;
+    }
+  }
+
+  .problem__list li {
+    margin: 0;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--line-strong);
+  }
+
+  .problem__list p {
+    margin: 0;
+  }
+
+  .problem__close {
+    margin: clamp(2.5rem, 2rem + 2vw, 3.5rem) 0 0;
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    font-weight: 500;
+    line-height: 1.35;
+    color: var(--ink);
+    max-width: 34ch;
+  }
+
+  .more-link {
+    margin: 2.5rem 0 0;
+    font-weight: 600;
+  }
+
+  /* Solutions */
+  .solution-rows {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .solution-row {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.5rem 1rem;
+    padding-block: 1.75rem;
+    border-top: 1px solid var(--line);
+    margin: 0;
+  }
+
+  .solution-row:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .solution-row__icon {
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: var(--radius-s);
+    background: var(--blue-soft);
+    color: var(--blue);
+  }
+
+  .solution-row h3 {
+    align-self: center;
+    margin: 0;
+    font-size: var(--step-2);
+  }
+
+  .solution-row > div {
+    grid-column: 1 / -1;
+  }
+
+  .solution-row p {
+    margin-bottom: 0.6rem;
+  }
+
+  .solution-row a {
+    font-weight: 600;
+  }
+
+  @media (min-width: 52rem) {
+    .solution-row {
+      grid-template-columns: 3rem 16rem 1fr;
+      gap: 1.5rem;
+      align-items: start;
+    }
+
+    .solution-row h3 {
+      align-self: start;
+      padding-top: 0.6rem;
+    }
+
+    .solution-row > div {
+      grid-column: auto;
+      padding-top: 0.5rem;
+    }
+  }
+
+  /* Oversight */
+  .oversight {
+    background: var(--ink);
+    color: #c9d3e6;
+    padding-block: var(--section);
+  }
+
+  .oversight h2,
+  .oversight h3 {
+    color: #fff;
+  }
+
+  .oversight .lede {
+    color: #d5dcec;
+  }
+
+  .oversight__grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 2rem 3rem;
+  }
+
+  @media (min-width: 44rem) {
+    .oversight__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .oversight__grid li {
+    margin: 0;
+  }
+
+  .oversight__icon {
+    display: inline-grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    border: 1.5px solid var(--teal-bright);
+    color: var(--teal-bright);
+    margin-bottom: 0.85rem;
+  }
+
+  .oversight__grid p {
+    margin: 0;
+  }
+
+  .oversight__note {
+    margin: clamp(2.5rem, 2rem + 2vw, 3.5rem) 0 0;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+    color: #c9d3e6;
+    font-size: var(--step--1);
+    max-width: 52rem;
+  }
+
+  .oversight :focus-visible {
+    outline-color: var(--focus);
+  }
+</style>

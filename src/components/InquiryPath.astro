@@ -1,0 +1,171 @@
+---
+/**
+ * Hero illustration: one inquiry's path from a missed call to a person on
+ * the team. Built in HTML so the text is real, readable, and scales on mobile.
+ * Illustrative only — not a screenshot of a live product.
+ */
+import Icon from './Icon.astro';
+---
+<figure class="path">
+  <ol class="path__list" role="list">
+    <li class="path__step">
+      <span class="path__node"><Icon name="phone-missed" size={20} /></span>
+      <div class="path__body">
+        <p class="path__title">Missed call, 6:42&nbsp;pm</p>
+        <p class="path__note">The team is closed for the day.</p>
+      </div>
+    </li>
+
+    <li class="path__step">
+      <span class="path__node"><Icon name="message" size={20} /></span>
+      <div class="path__body">
+        <p class="path__title">A follow-up text goes out</p>
+        <p class="path__bubble">Sorry we missed your call. What can we help you with? We’ll make sure the right person gets back to you.</p>
+        <p class="path__note">Wording you approved in advance.</p>
+      </div>
+    </li>
+
+    <li class="path__step">
+      <span class="path__node"><Icon name="clipboard" size={20} /></span>
+      <div class="path__body">
+        <p class="path__title">Details are captured</p>
+        <ul class="path__chips" role="list">
+          <li>Name</li>
+          <li>What they need</li>
+          <li>Best time to reach</li>
+        </ul>
+      </div>
+    </li>
+
+    <li class="path__step path__step--human">
+      <span class="path__node"><Icon name="person-check" size={20} /></span>
+      <div class="path__body">
+        <p class="path__title">Your scheduler picks it up</p>
+        <p class="path__note">A short summary is waiting first thing in the morning. A person makes the call.</p>
+      </div>
+    </li>
+  </ol>
+  <figcaption class="path__caption">An example path. Every message and handoff rule is set with you.</figcaption>
+</figure>
+
+<style>
+  .path {
+    margin: 0;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-m);
+    padding: clamp(1.25rem, 1rem + 1.5vw, 2rem);
+    box-shadow: 0 1px 0 var(--line), 0 18px 40px -24px rgba(14, 26, 58, 0.28);
+  }
+
+  .path__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+  }
+
+  .path__step {
+    position: relative;
+    display: grid;
+    grid-template-columns: 2.5rem 1fr;
+    gap: 1rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .path__step + .path__step {
+    margin-top: 0;
+  }
+
+  .path__step:last-child {
+    padding-bottom: 0;
+  }
+
+  /* The connector: a thin trace like the circuit lines in the logo. */
+  .path__step:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    left: calc(1.25rem - 1px);
+    top: 2.5rem;
+    bottom: 0;
+    border-left: 2px dashed var(--teal-bright);
+  }
+
+  .path__node {
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background: var(--blue-soft);
+    color: var(--blue);
+    border: 1.5px solid #c9d8fb;
+    position: relative;
+    z-index: 1;
+  }
+
+  .path__step--human .path__node {
+    background: var(--ink);
+    color: #fff;
+    border-color: var(--ink);
+  }
+
+  .path__body {
+    padding-top: 0.45rem;
+    min-width: 0;
+  }
+
+  .path__title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.0625rem;
+    color: var(--ink);
+    margin: 0 0 0.25rem;
+    line-height: 1.3;
+  }
+
+  .path__note {
+    font-size: var(--step--1);
+    color: var(--muted);
+    margin: 0;
+  }
+
+  .path__bubble {
+    font-size: 0.9375rem;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 14px 14px 14px 4px;
+    padding: 0.65rem 0.85rem;
+    margin: 0.4rem 0 0.45rem;
+    color: var(--ink);
+    line-height: 1.45;
+  }
+
+  .path__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    list-style: none;
+    margin: 0.4rem 0 0;
+    padding: 0;
+  }
+
+  .path__chips li {
+    margin: 0;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--teal);
+    background: #e7f6f8;
+    border: 1px solid #bfe6ec;
+    border-radius: 999px;
+    padding: 0.2rem 0.65rem;
+  }
+
+  .path__caption {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--line);
+    font-size: var(--step--1);
+    color: var(--muted);
+  }
+</style>

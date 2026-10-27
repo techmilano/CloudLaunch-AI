@@ -1,0 +1,134 @@
+---
+/**
+ * DRAFT PRIVACY NOTICE — NOT LEGAL ADVICE.
+ * This page is a starting point only. It must be reviewed and completed by
+ * the business owner and a qualified legal advisor before launch. It is
+ * marked noindex and excluded from the sitemap until then.
+ * Once approved: remove the draft banner, remove `noindex`, remove the
+ * /privacy/ entries from netlify.toml headers and astro.config.mjs sitemap filter,
+ * and change the footer/contact link text from "(draft)".
+ */
+import Base from '../layouts/Base.astro';
+import Ph from '../components/Ph.astro';
+import { site } from '../config/site';
+---
+<Base title="Privacy notice (draft)" description="Draft privacy notice for the CloudLaunchAI website. Pending business and legal review." noindex>
+  <section class="section">
+    <div class="wrap legal">
+      <div class="draft-banner" role="note">
+        <p><strong>Draft — requires business and legal review.</strong></p>
+        <p>
+          This notice is a working draft. It has not been reviewed by a lawyer and may not reflect
+          every law that applies to {site.name} or its customers. Do not rely on it as a final
+          statement of our practices.
+        </p>
+      </div>
+
+      <h1>Privacy notice</h1>
+      <p class="meta">Last updated: <Ph value="[PRIVACY_EFFECTIVE_DATE]" /></p>
+
+      <h2>Who we are</h2>
+      <p>
+        This website is operated by <Ph value={site.legalName} /> (“{site.name}”, “we”, “us”).
+        You can contact us about this notice at <Ph value={site.contactEmail} />.
+      </p>
+
+      <h2>Information you give us</h2>
+      <p>
+        When you use the contact form, you provide your name, business email, company name,
+        business type, and the message you write. We use this information to respond to your
+        inquiry and to discuss whether our services may be a fit for your business.
+      </p>
+      <p>
+        Please do not send health, payment card, government ID, or other sensitive personal
+        information through the contact form.
+      </p>
+
+      <h2>How form submissions are handled</h2>
+      <p>
+        Contact form submissions are processed and stored by our website host, Netlify, Inc. They
+        are not published on this website. Netlify may apply automated spam filtering to
+        submissions. See Netlify’s own privacy policy for how it handles data.
+      </p>
+      <p class="review-note">
+        <Ph value="[REVIEW: confirm who on your team can access submissions, where notification emails are sent, and how long submissions are kept before deletion]" />
+      </p>
+
+      <h2>Information collected automatically</h2>
+      <p>
+        Like most websites, our hosting provider may record basic technical information when you
+        visit, such as your IP address, browser type, and the pages requested, for security and
+        operation of the site.
+      </p>
+      <p class="review-note">
+        <Ph value="[REVIEW: list any analytics, advertising, chat, or scheduling tools added to the site. As built, the site loads no third-party analytics, advertising, or tracking scripts and sets no cookies of its own.]" />
+      </p>
+
+      <h2>Scheduling</h2>
+      <p>
+        If you book a call through our scheduling link, that booking is handled by a third-party
+        scheduling provider under its own privacy policy.
+      </p>
+      <p class="review-note"><Ph value="[REVIEW: name the scheduling provider once chosen]" /></p>
+
+      <h2>How long we keep information</h2>
+      <p><Ph value="[RETENTION_PERIOD — state how long inquiries are kept and how they are deleted]" /></p>
+
+      <h2>Sharing</h2>
+      <p>
+        We do not sell the information you submit through this website.
+      </p>
+      <p class="review-note"><Ph value="[REVIEW: confirm this statement, and list any service providers you share inquiry data with]" /></p>
+
+      <h2>Your choices</h2>
+      <p>
+        You can ask us to access, correct, or delete the information you submitted by contacting
+        <Ph value={site.contactEmail} />.
+      </p>
+      <p class="review-note">
+        <Ph value="[REVIEW: add any rights required by the laws that apply to you and your visitors, e.g. state privacy laws]" />
+      </p>
+
+      <h2>Changes to this notice</h2>
+      <p>We may update this notice. The date at the top shows when it was last changed.</p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .legal {
+    max-width: 46rem;
+  }
+
+  .legal h2 {
+    font-size: var(--step-1);
+    margin-top: 2.25rem;
+  }
+
+  .meta {
+    color: var(--muted);
+    font-size: var(--step--1);
+  }
+
+  .draft-banner {
+    background: var(--placeholder-bg);
+    color: var(--placeholder-ink);
+    border: 2px dashed #c99a00;
+    border-radius: var(--radius-m);
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .draft-banner strong {
+    color: inherit;
+    font-size: var(--step-1);
+  }
+
+  .draft-banner p:last-child {
+    margin-bottom: 0;
+  }
+
+  .review-note {
+    font-size: var(--step--1);
+  }
+</style>

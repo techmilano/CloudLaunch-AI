@@ -1,0 +1,14 @@
+---
+/**
+ * Renders a value from site config. If it's still a square-bracket placeholder,
+ * it's highlighted so it's obvious on the page.
+ */
+import { isPlaceholder } from '../config/site';
+
+interface Props {
+  value: string;
+}
+const { value } = Astro.props;
+const placeholder = isPlaceholder(value);
+---
+{placeholder ? <span class="placeholder" title="Placeholder — replace in src/config/site.ts">{value}</span> : value}

@@ -1,0 +1,60 @@
+---
+import BookingButton from './BookingButton.astro';
+
+interface Props {
+  title?: string;
+  text?: string;
+}
+const {
+  title = 'See where your inquiries are slipping through',
+  text = 'A discovery call is a conversation about how calls and inquiries reach your business today, where they stall, and whether a managed workflow makes sense for you.',
+} = Astro.props;
+---
+<section class="cta-band" aria-labelledby="cta-band-title">
+  <div class="wrap">
+    <div class="cta-band__inner">
+    <div>
+      <h2 id="cta-band-title">{title}</h2>
+      <p>{text}</p>
+    </div>
+    <div class="btn-row">
+      <BookingButton />
+      <a class="btn btn--secondary" href="/contact/">Send a message</a>
+    </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-band {
+    padding-block: clamp(3rem, 2rem + 4vw, 5.5rem) var(--section);
+  }
+
+  .cta-band__inner {
+    display: grid;
+    gap: 2rem;
+    align-items: end;
+    border-top: 3px solid var(--ink);
+    padding-top: clamp(2rem, 1.5rem + 2vw, 3rem);
+  }
+
+  @media (min-width: 52rem) {
+    .cta-band__inner {
+      grid-template-columns: 1.4fr 1fr;
+    }
+
+    .cta-band .btn-row {
+      justify-content: flex-end;
+    }
+  }
+
+  .cta-band h2 {
+    max-width: 22ch;
+  }
+
+  .cta-band p {
+    margin-bottom: 0;
+    font-size: var(--step-1);
+    line-height: 1.55;
+  }
+</style>
